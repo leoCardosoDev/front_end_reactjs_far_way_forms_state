@@ -28,7 +28,7 @@ export default function App() {
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   )
 }
@@ -107,10 +107,16 @@ function Item({ item, onDeleteItem, onToggleItem }) {
   )
 }
 
-function Stats() {
+function Stats({ items }) {
+  // Derivate
+  const qtdItems = items.length
+  const numPacked = items.filter((item) => item.packed).length
+  const percent = Math.round((numPacked / qtdItems) * 100)
+  const result = `👜 Você tem ${qtdItems} itens em sua lista, e na sua mala já tem
+  ${numPacked} itens (${percent}%)`
   return (
     <footer className="stats">
-      <em>👜 Você tem X itens em sua lista, e já fez as malas X (X%)</em>
+      <em>{percent === 100 ? 'Você está pronto para viajar! ✈️' : result}</em>
     </footer>
   )
 }
